@@ -1,0 +1,17 @@
+﻿@page "/routing"
+@page "/routing/{text?}"
+
+
+<h3>Blazor is @Text</h3>
+
+@code {
+    [Parameter]
+    public string? Text { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        Text = Text ?? "fantastic";
+        return base.OnInitializedAsync();
+    }
+
+}
