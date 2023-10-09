@@ -9,13 +9,15 @@
 }
 else
 {
-    <TrailDetails Trail="_selectedTrail" />
+    
+    <TrailSearch></TrailSearch>
     <div class="grid">
         @foreach (var trail in _trails)
         {
             <TrailCard Trail="trail" OnSelected="HandleTrailSelected" />
         }
     </div>
+    <TrailDetails Trail="_selectedTrail" />
 }
 
 @code {

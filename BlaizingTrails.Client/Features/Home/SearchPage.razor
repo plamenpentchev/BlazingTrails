@@ -1,0 +1,64 @@
+﻿@page "/search"
+@page "/search/{SearchTerm?}"
+
+@inject HttpClient Http
+
+<PageTitle>Search Trails- Blazing Trails</PageTitle>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Home</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Search
+        </li>
+    </ol>
+</nav>
+
+<h3 class="mt-5 mb-4">Search results for @SearchTerm</h3>
+@if (_searchResults is  null)
+{
+    <p>Loading search results ... </p>
+}
+else
+{
+    <TrailDetails Trail="@_selectedTrail"></TrailDetails>
+    <div class="grid">
+        @foreach (Trail trail in _searchResults)
+        {
+            <TrailCard Trail="trail" OnSelected="HandleTrailSelected"></TrailCard>
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string SearchTerm { get; set; } = string.Empty;
+    [Parameter]
+    public IEnumerable<Trail>? AllTrails { get; set; }
+
+    private IEnumerable<Trail>? _searchResults;
+    private Trail? _selectedTrail;
+    private void HandleTrailSelected(Trail t) => _selectedTrail = t;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            if (AllTrails is null)
+            {
+                AllTrails = await Http.GetFromJsonAsync<IEnumerable<Trail>>("trails/trail-data.json");
+            }
+            _searchResults = AllTrails?.Where(t => t.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) ||
+                                                        t.Location.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase));
+
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine($"There was a problem loading trail data: {ex.Message}");
+        }
+    }
+
+
+}
