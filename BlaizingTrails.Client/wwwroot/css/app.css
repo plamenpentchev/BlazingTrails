@@ -40,10 +40,10 @@ a {
     color: var(--brand);
 }
 
-.btn-outline-primary:hover {
-    background-color: var(--brand);
-    border-color: var(--brand);
-}
+    .btn-outline-primary:hover {
+        background-color: var(--brand);
+        border-color: var(--brand);
+    }
 
 .grid {
     display: grid;
@@ -51,7 +51,6 @@ a {
     column-gap: 123px;
     row-gap: 75px;
 }
-
 
 #blazor-error-ui {
     background: lightyellow;
@@ -65,7 +64,7 @@ a {
     z-index: 1000;
 }
 
-#blazor-error-ui .dismiss {
+    #blazor-error-ui .dismiss {
         cursor: pointer;
         position: absolute;
         right: 0.75rem;
