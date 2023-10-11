@@ -38,8 +38,10 @@ else
 @code {
     [Parameter]
     public string SearchTerm { get; set; } = string.Empty;
-    [Parameter]
+    [Parameter, SupplyParameterFromQuery]
     public int? MaxLength { get; set; }
+    [Parameter, SupplyParameterFromQuery]
+    public int? MaxTime { get; set; }
     [Parameter]
     public IEnumerable<Trail>? AllTrails { get; set; }
 
@@ -72,14 +74,26 @@ else
     {
 
         _selectedTrail = null;
-        if (_cachedSearchResults.Any() && MaxLength.HasValue)
+        _searchResults = _cachedSearchResults;
+        if (_cachedSearchResults.Any() && !MaxLength.HasValue &&  !MaxTime.HasValue)
         {
-            _searchResults = _cachedSearchResults.Where(t => t.Length < MaxLength.Value);
-
-        }else if(_cachedSearchResults.Any() && !MaxLength.HasValue)
-        {
-            _searchResults = _cachedSearchResults;
+            return;
         }
+        if (_searchResults.Any() && MaxTime.HasValue)
+        {
+            _searchResults = _searchResults.Where(t => t.TimeInMinutes / 60 < MaxTime.Value);
+
+        }
+        if (_searchResults.Any() && MaxLength.HasValue)
+        {
+            _searchResults = _searchResults.Where(t => t.Length < MaxLength.Value);
+
+        } 
+        
+        //else if (_cachedSearchResults.Any() && !MaxTime.HasValue)
+        //{
+        //    _searchResults = _cachedSearchResults;
+        //}
     }
 
 
