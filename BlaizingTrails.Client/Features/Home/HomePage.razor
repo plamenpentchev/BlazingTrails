@@ -28,6 +28,7 @@ else
     {
         try
         {
+            _selectedTrail = default!;
             _trails = await Http.GetFromJsonAsync<IEnumerable<Trail>>("trails/trail-data.json");
         }
         catch (HttpRequestException ex)

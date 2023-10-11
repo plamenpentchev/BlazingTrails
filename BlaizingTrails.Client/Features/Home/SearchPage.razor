@@ -17,13 +17,15 @@
     </ol>
 </nav>
 
-<h3 class="mt-5 mb-4">Search results for @SearchTerm</h3>
+
 @if (_searchResults is  null)
 {
     <p>Loading search results ... </p>
 }
 else
 {
+    <h3 class="mt-5 mb-4">Search results for @SearchTerm</h3>
+    <SearchFilter SearchTerm="@SearchTerm"></SearchFilter>
     <TrailDetails Trail="@_selectedTrail"></TrailDetails>
     <div class="grid">
         @foreach (Trail trail in _searchResults)
@@ -37,11 +39,12 @@ else
     [Parameter]
     public string SearchTerm { get; set; } = string.Empty;
     [Parameter]
-    public int MaxLength { get; set; }
+    public int? MaxLength { get; set; }
     [Parameter]
     public IEnumerable<Trail>? AllTrails { get; set; }
 
-    private IEnumerable<Trail>? _searchResults;
+    private IEnumerable<Trail>? _searchResults = Array.Empty<Trail>();
+    private IEnumerable<Trail> _cachedSearchResults = Array.Empty<Trail>();
     private Trail? _selectedTrail;
     private void HandleTrailSelected(Trail t) => _selectedTrail = t;
 
@@ -49,17 +52,33 @@ else
     {
         try
         {
+
             if (AllTrails is null)
             {
                 AllTrails = await Http.GetFromJsonAsync<IEnumerable<Trail>>("trails/trail-data.json");
             }
             _searchResults = AllTrails?.Where(t => t.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) ||
                                                         t.Location.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase));
+            _cachedSearchResults = _searchResults ?? Array.Empty<Trail>();
 
         }
         catch (HttpRequestException ex)
         {
             Console.WriteLine($"There was a problem loading trail data: {ex.Message}");
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+
+        _selectedTrail = null;
+        if (_cachedSearchResults.Any() && MaxLength.HasValue)
+        {
+            _searchResults = _cachedSearchResults.Where(t => t.Length < MaxLength.Value);
+
+        }else if(_cachedSearchResults.Any() && !MaxLength.HasValue)
+        {
+            _searchResults = _cachedSearchResults;
         }
     }
 
