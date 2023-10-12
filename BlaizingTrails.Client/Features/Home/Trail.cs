@@ -1,4 +1,4 @@
-﻿namespace BlaizingTrails.Client.Features.Home
+﻿namespace BlazingTrails.Client.Features.Home
 {
     public class Trail
     {
