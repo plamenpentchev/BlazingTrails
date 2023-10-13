@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazingTrails.Client", "Bla
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazingTrails.API", "BlazingTrails.API\BlazingTrails.API.csproj", "{6ED33F2A-A861-4367-92EA-3E08E651CD4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingTrails.Shared", "BlazingTrails.Shared\BlazingTrails.Shared.csproj", "{DF2F26EF-1A31-4159-BD53-A73195895380}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazingTrails.Shared", "BlazingTrails.Shared\BlazingTrails.Shared.csproj", "{DF2F26EF-1A31-4159-BD53-A73195895380}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
