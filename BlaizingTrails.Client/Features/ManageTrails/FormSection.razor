@@ -16,7 +16,7 @@
     [Parameter, EditorRequired]
     public string Title { get; set; } = default!;
     [Parameter,EditorRequired]
-    public string Helptext { get; set; } = default;
+    public string Helptext { get; set; } = default!;
     [Parameter, EditorRequired]
     public RenderFragment ChildContent { get; set; } = default!;
 }
