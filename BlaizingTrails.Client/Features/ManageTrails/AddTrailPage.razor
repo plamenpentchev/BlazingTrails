@@ -11,20 +11,26 @@
 <h3 class="mt-5 mb-4">Add a trail</h3>
 
 <EditForm Model="_trail" OnValidSubmit="SubmitForm">
+
+    <FluentValidationValidator />
+
     <FormSection Title="Basic Details" 
         Helptext="This information is used to identify the trail and can be searched to help hikers find it">
        
         <FormFieldSet Width="col-6">
             <label for="trailName" class="font-weight-bold text-secondary">Name</label>
             <InputText id="trailName" @bind-Value="_trail.Name" class="form-control"></InputText>
+            <ValidationMessage For="@(() => _trail.Name)"></ValidationMessage>
         </FormFieldSet>
         <FormFieldSet>
             <label for="trailDescription" class="font-weight-bold text-secondary">Description</label>
-            <InputTextArea id="trailDescription" @bind-Value="_trail.Description" class="form-control" ></InputTextArea>
+            <InputTextArea id="trailDescription" @bind-Value="_trail.Description" class="form-control"></InputTextArea>
+            <ValidationMessage For="@(() => _trail.Description)"></ValidationMessage>
         </FormFieldSet>
         <FormFieldSet Width="col-6">
             <label for="trailLocation" class="font-weight-bold text-secondary">Location</label>
             <InputText id="trailLocation" @bind-Value="_trail.Location" class="form-control"></InputText>
+            <ValidationMessage For="@(() => _trail.Location)"></ValidationMessage>
         </FormFieldSet>
     </FormSection>
     <FormSection Title="Difficulty" 
@@ -33,6 +39,7 @@
         <FormFieldSet Width="col-3">
             <label for="trailLength" class="font-weight-bold text-secondary">Length (km)</label>
             <InputNumber id="trailLength" @bind-Value="_trail.Length" class="form-control"></InputNumber>
+            <ValidationMessage For="@(() => _trail.Length)"></ValidationMessage>
         </FormFieldSet>
     </FormSection>
     <FormSection Title="Route Instructions" Helptext="Route Instructions are a guide for the trail. This helps hikers new to the trail stay on track." >
@@ -48,12 +55,14 @@
                     <div class="form-group">
                         <label class="font-weight-bold text-secondary">Stage</label>
                         <p>@routeDescription.Stage</p>
+                    <ValidationMessage For="@( () => routeDescription.Stage)"></ValidationMessage>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="routeInstructionDescription" class="font-weight-bold text-secondary">Description</label>
                         <InputText id="routeInstructionDescription" @bind-Value="@routeDescription.Description" class="form-control"></InputText>
+                        <ValidationMessage For="@(()=> routeDescription.Description)"></ValidationMessage>
                     </div>
                 </div>
                 <div class="col-1 flex-column mt-3">
@@ -68,9 +77,10 @@
         <div class="row">
             <div class="col">
                 <button class="btn btn-outline-primary" type="button" @onclick="@(() => _trail.Route.Add(new TrailDto.RouteInstruction()))">
-                    Add Trail
+                    Add Instruction
                 </button>
             </div>
+            <ValidationMessage For="@(() => _trail.Route)"></ValidationMessage>
         </div>
         
     </FormSection>
