@@ -8,8 +8,7 @@
         public string Location { get; set; } = "";
         public int TimeInMinutes { get; set; }
         public int Length { get; set; }
-        public IEnumerable<RouteInstruction> Route { get; set; } =
-        Array.Empty<RouteInstruction>();
+        public List<RouteInstruction> Route { get; set; } = new List<RouteInstruction>();
 
         public class RouteInstruction
         {
