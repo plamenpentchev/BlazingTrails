@@ -4,17 +4,6 @@
     color: red;
     font-size:small;
 }
-input.invalid,
-textarea.invalid,
-select.invalid {
-    border-color: red;
-}
-
-input.valid.modified,
-textarea.valid.modified,
-select.valid.modified {
-    border-color: green;
-}
 
 :root {
     --brand: #448922;
