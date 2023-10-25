@@ -39,7 +39,7 @@ namespace BlazingTrails.API.Features.ManageTrails
                     Description = x.Description,
                     Trail = trail
                 });
-             
+
                 await _database.RouteInstructions.AddRangeAsync(routeInstructions.ToList(), cancellationToken);
                 await _database.SaveChangesAsync(cancellationToken);
 
