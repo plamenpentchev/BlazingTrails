@@ -1,5 +1,7 @@
 ﻿@page "/add-trail"
 @using BlazingTrails.Client.Validation;
+@using MediatR;
+
 @inject IMediator Mediator
 
 <PageTitle>Add Trail - Blazing Trails</PageTitle>
@@ -31,7 +33,7 @@ else if (_errorMessage is not null)
     </div>
 }
 
-<EditForm EditContext="_editContext" OnValidSubmit="SubmitForm" css>
+<EditForm EditContext="_editContext" OnValidSubmit="SubmitForm" >
 
     <FluentValidationValidator />
 
@@ -61,6 +63,11 @@ else if (_errorMessage is not null)
             <label for="trailLength" class="font-weight-bold text-secondary">Length (km)</label>
             <InputNumber id="trailLength" @bind-Value="_trail.Length" class="form-control"></InputNumber>
             <ValidationMessage For="@(() => _trail.Length)"></ValidationMessage>
+        </FormFieldSet>
+        <FormFieldSet Width="col-5">
+            <label for="trailTime" class="font-weight-bold text-secondary">Time</label>
+            <InputTime @bind-Value="_trail.TimeInMinutes" id="trailTime"></InputTime>
+            <ValidationMessage For="@(() => _trail.TimeInMinutes)"></ValidationMessage>
         </FormFieldSet>
     </FormSection>
     <FormSection Title="Route Instructions" Helptext="Route Instructions are a guide for the trail. This helps hikers new to the trail stay on track." >

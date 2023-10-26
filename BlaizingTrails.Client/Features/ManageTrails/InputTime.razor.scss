@@ -1,18 +1,19 @@
 ﻿.input-time {
     display: flex;
+    flex-direction: row;
 
     div {
-        display:flex;
+        display: flex;
         align-items: center;
         margin-right: 20px;
 
         input {
-            width: 50px;
+            width: 90px;
             margin-right: 10px;
         }
 
         label {
-            margin-bottom:0;
+            margin-bottom: 0;
         }
     }
 }

@@ -1,12 +1,13 @@
-﻿@inherits InputBase<int>
+﻿@using System.Diagnostics.CodeAnalysis;
+@inherits InputBase<int>
 
 <div class="input-time">
     <div>
-        <input type="number" class="form-control" min="0" max="23" @onchange="SetHoursValue" value="@_hours"/>
+        <input type="number"  class="form-control @CssClass" min="0" max="23" @onchange="SetHoursValue" value="@_hours"/>
         <label>Hours</label>
     </div>
     <div>
-        <input type="number" class="form-control" min="0" max="59" />
+        <input type="number"  class="form-control @CssClass" min="0" max="59" @onchange="SetMinutesValue" value="@_minutes" />
         <label>Minutes</label>
     </div>
 </div>
@@ -15,8 +16,10 @@
     private int _hours;
     private int _minutes;
 
+
     private void SetHoursValue(ChangeEventArgs args)
     {
+
         int.TryParse(args.Value?.ToString(), out _hours);
         SetCurrentValue();
     }
@@ -29,9 +32,21 @@
 
     private void SetCurrentValue() => CurrentValue = (_hours * 60) + _minutes;
 
-    protected override TryParseValueFromString(string? value, out int result, out string? validationErrorMessage)
+    protected override void OnParametersSet()
     {
-        
+        if (CurrentValue > 0)
+        {
+            _hours = CurrentValue / 60;
+            _minutes = CurrentValue % 60;
+        }else
+        {
+            _hours = 0;
+            _minutes = 0;
+        }
+    }
+
+    protected override bool TryParseValueFromString(string value, [MaybeNullWhen(false)] out int result, [NotNullWhen(false)] out string validationErrorMessage)
+    {
         throw new NotImplementedException();
     }
 }

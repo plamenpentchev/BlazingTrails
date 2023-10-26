@@ -29,6 +29,7 @@ namespace BlazingTrails.Shared.Features.ManageTrails
             RuleFor(x => x.Description).NotEmpty().WithMessage("Please enter a description");
             RuleFor(x => x.Location).NotEmpty().WithMessage("Please enter a location");
             RuleFor(x => x.Length).GreaterThan(0).WithMessage("Please enter a length");
+            RuleFor(x => x.TimeInMinutes).GreaterThan(0).WithMessage("Please enter the time it takes to cover this trail.");
             RuleFor(x => x.Route).Must(x => x.Count > 0).WithMessage($"Please enter at least one route instruction");
             RuleForEach(x => x.Route).SetValidator(new RouteInstructionValidator());
         }
