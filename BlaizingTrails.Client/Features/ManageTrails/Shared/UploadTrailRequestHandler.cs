@@ -1,7 +1,7 @@
-﻿using BlazingTrails.Shared.Features.ManageTrails;
+﻿using BlazingTrails.Shared.Features.ManageTrails.Shared;
 using MediatR;
 
-namespace BlazingTrails.Client.Features.ManageTrails
+namespace BlazingTrails.Client.Features.ManageTrails.Shared
 {
     public class UploadTrailRequestHandler :
         IRequestHandler<UploadTrailImageRequest, UploadTrailImageRequest.Response>
@@ -16,7 +16,7 @@ namespace BlazingTrails.Client.Features.ManageTrails
         public async Task<UploadTrailImageRequest.Response> Handle(UploadTrailImageRequest request, CancellationToken cancellationToken)
         {
             //... get file content
-           var fileContent = request.File.OpenReadStream(request.File.Size, cancellationToken);
+            var fileContent = request.File.OpenReadStream(request.File.Size, cancellationToken);
             if (fileContent == null)
             {
                 throw new ArgumentException("Failed to open stream to file.");

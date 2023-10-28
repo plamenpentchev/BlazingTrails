@@ -1,10 +1,10 @@
 ﻿using Ardalis.ApiEndpoints;
 using BlazingTrails.API.Persistence;
 using BlazingTrails.API.Persistence.Entities;
-using BlazingTrails.Shared.Features.ManageTrails;
+using BlazingTrails.Shared.Features.ManageTrails.AddTrail;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BlazingTrails.API.Features.ManageTrails
+namespace BlazingTrails.API.Features.ManageTrails.AddTrail
 {
     public class AddTrailEndpoint : BaseAsyncEndpoint
         .WithRequest<AddTrailRequest>
@@ -50,7 +50,7 @@ namespace BlazingTrails.API.Features.ManageTrails
 
                 return BadRequest(ex);
             }
-           
+
 
         }
     }
