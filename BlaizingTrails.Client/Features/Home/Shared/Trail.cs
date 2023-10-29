@@ -1,4 +1,4 @@
-﻿namespace BlazingTrails.Client.Features.Home
+﻿namespace BlazingTrails.Client.Features.Home.Shared
 {
     public class Trail
     {
@@ -17,6 +17,6 @@
     public class RouteInstruction
     {
         public int Stage { get; set; }
-        public string Description { get; set; }=string.Empty;
+        public string Description { get; set; } = string.Empty;
     }
 }

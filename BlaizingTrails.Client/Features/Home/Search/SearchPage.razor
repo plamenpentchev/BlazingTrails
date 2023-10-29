@@ -2,7 +2,8 @@
 @page "/search/{SearchTerm?}"
 @page "/search/{SearchTerm}/maxlength/{MaxLength:int}"
 
-@inject HttpClient Http
+
+@inject IMediator Mediator
 
 <PageTitle>Search Trails- Blazing Trails</PageTitle>
 
@@ -36,14 +37,14 @@ else
 }
 
 @code {
-        [Parameter]
-        public string SearchTerm { get; set; } = string.Empty;
-        [Parameter, SupplyParameterFromQuery]
-        public int? MaxLength { get; set; }
-        [Parameter, SupplyParameterFromQuery]
-        public int? MaxTime { get; set; }
-        [Parameter]
-        public IEnumerable<Trail>? AllTrails { get; set; }
+    [Parameter]
+    public string SearchTerm { get; set; } = string.Empty;
+    [Parameter, SupplyParameterFromQuery]
+    public int? MaxLength { get; set; }
+    [Parameter, SupplyParameterFromQuery]
+    public int? MaxTime { get; set; }
+    // [Parameter]
+    // public IEnumerable<Trail>? AllTrails { get; set; }
 
     private IEnumerable<Trail>? _searchResults = Array.Empty<Trail>();
     private IEnumerable<Trail> _cachedSearchResults = Array.Empty<Trail>();
@@ -55,14 +56,29 @@ else
         try
         {
 
-            if (AllTrails is null)
-            {
-                AllTrails = await Http.GetFromJsonAsync<IEnumerable<Trail>>("trails/trail-data.json");
-            }
-            _searchResults = AllTrails?.Where(t => t.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) ||
-                                                        t.Location.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase));
-            _cachedSearchResults = _searchResults ?? Array.Empty<Trail>();
+            // if (AllTrails is null)
+            // {
+            //     AllTrails = await Http.GetFromJsonAsync<IEnumerable<Trail>>("trails/trail-data.json");
+            // }
+            // _searchResults = AllTrails?.Where(t => t.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) ||
+            //                                             t.Location.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase));
 
+            var tmp = (await Mediator.Send(new GetTrailsRequest())).Trails;
+            var filtered = tmp.Where(t => t.Name.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase) ||
+                                       t.Location.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase));
+            _searchResults = filtered.Select(x => new Trail()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Location = x.Location,
+                    Description = x.Description,
+                    TimeInMinutes = x.TimeInMinutes,
+                    Image = x.Image ?? "",
+                    Length = x.Length
+                });
+
+            _cachedSearchResults = _searchResults ?? Array.Empty<Trail>();
+            UpdateFilters();
         }
         catch (HttpRequestException ex)
         {

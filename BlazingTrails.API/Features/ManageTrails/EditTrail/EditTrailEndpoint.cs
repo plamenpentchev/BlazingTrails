@@ -42,7 +42,7 @@ namespace BlazingTrails.API.Features.ManageTrails.EditTrail
             if (request.Trail.ImageAction ==ImageAction.Remove)
             {
                 System.IO.File.Delete(Path.Combine(Directory.GetCurrentDirectory(), @"Images", trail.Image));
-                trail.Image = null;
+                trail.Image = string.Empty;
             }
 
             await _database.SaveChangesAsync(cancellationToken);
