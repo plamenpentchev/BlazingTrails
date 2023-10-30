@@ -30,18 +30,21 @@
         
     }else if(_mode == ViewMode.Table)
     {
-        <table>
-            <thead>
-                @HeaderTemplate
-            </thead>
-            <tbody>
-                @foreach (var item in Items)
-                {
-                    @RowTemplate(item)
-                }
-            </tbody>
-        </table>
-        
+        <div class="table-template">
+            <table>
+                <thead>
+                    @HeaderTemplate
+                </thead>
+                <tbody>
+                    @foreach (var item in Items)
+                    {
+                        @RowTemplate(item)
+                    }
+                </tbody>
+            </table>
+
+        </div>
+       
     }
 </div>
 
