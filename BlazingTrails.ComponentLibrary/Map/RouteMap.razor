@@ -1,0 +1,34 @@
+﻿@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+
+@implements IAsyncDisposable
+
+<div class="map-wrapper">
+    <div style="height:@(Height); width: @(Width);" @ref="_map">
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Width { get; set; } = "500px";
+    [Parameter] public string Height { get; set; } = "1000px";
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _routeMapModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BlazingTrails.ComponentLibrary/Map/RouteMap.razor.js");
+            await _routeMapModule.InvokeVoidAsync("initialize", _map);
+        }
+    }
+
+    private ElementReference _map;
+    private IJSObjectReference? _routeMapModule;
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (_routeMapModule is not null)
+        {
+            await _routeMapModule.DisposeAsync();
+        }   
+    }
+
+}

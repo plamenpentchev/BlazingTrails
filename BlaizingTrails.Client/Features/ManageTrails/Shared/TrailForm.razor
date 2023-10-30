@@ -1,4 +1,5 @@
 ﻿@using BlazingTrails.Client.Validation;
+@using BlazingTrails.ComponentLibrary.Map;
 @using MediatR;
 
 @inject IMediator Mediator
@@ -63,47 +64,9 @@
             <ValidationMessage For="@(() => _trail.TimeInMinutes)"></ValidationMessage>
         </FormFieldSet>
     </FormSection>
-    <FormSection Title="Route Instructions" Helptext="Route Instructions are a guide for the trail. This helps hikers new to the trail stay on track.">
-        @{
-            var i = 0;
-        }
-        @foreach (var routeDescription in _trail.Route)
-        {
-            i++;
-            routeDescription.Stage = i;
-            <div class="row">
-                <div class="col-2">
-                    <div class="form-group">
-                        <label class="font-weight-bold text-secondary">Stage</label>
-                        <p>@routeDescription.Stage</p>
-                        <ValidationMessage For="@( () => routeDescription.Stage)"></ValidationMessage>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label for="routeInstructionDescription" class="font-weight-bold text-secondary">Description</label>
-                        <InputText id="routeInstructionDescription" @bind-Value="@routeDescription.Description" class="form-control"></InputText>
-                        <ValidationMessage For="@(()=> routeDescription.Description)"></ValidationMessage>
-                    </div>
-                </div>
-                <div class="col-1 flex-column mt-3">
-                    <button type="button" class="btn btn-link" @onclick="@(()=> _trail.Route.Remove(routeDescription))">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill text-danger" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        }
-        <div class="row">
-            <div class="col">
-                <button class="btn btn-outline-primary" type="button" @onclick="@(() => _trail.Route.Add(new TrailDto.RouteInstruction()))">
-                    Add Instruction
-                </button>
-            </div>
-            <ValidationMessage For="@(() => _trail.Route)"></ValidationMessage>
-        </div>
-
+    <FormSection Title="Route Instructions" 
+        Helptext="Route Instructions are a guide for the trail. This helps hikers new to the trail stay on track.">
+        <RouteMap Width="100%"></RouteMap>
     </FormSection>
     <div class="mt-4 mb-5">
         <div class="row">
