@@ -1,4 +1,4 @@
-﻿export function initialize(hostElement) {
+﻿export function initialize(hostElement, routeMapComponent) {
     hostElement.map = L.map(hostElement).setView([51.7002, -0.10], 3);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -14,6 +14,8 @@
         hostElement.waypoints.push(waypoint);
         let line = L.polyline(hostElement.waypoints.map(m => m.getLatLng()), { color: 'var(--brand)' }).addTo(hostElement.map);
         hostElement.lines.push(line);
+
+        routeMapComponent.invokeMethodAsync('WaypointAdded', e.latlng.lat, e.latlng.lng);
     });
 }
 
@@ -30,10 +32,10 @@ export function deleteLastWayPoint(hostElement) {
             lastLine.remove(hostElement.map);
             hostElement.lines.pop();
 
-            console.log(`Deleted waypoint (and lines) at latitude ${lastWayPont.getLatLng().lat} longitude ${lastWayPont.getLatLng().lng}`);
+
             return `Deleted waypoint (and lines) at latitude ${lastWayPont.getLatLng().lat} longitude ${lastWayPont.getLatLng().lng}`;
         }
-        console.log(`Deleted waypoint at latitude ${lastWayPont.getLatLng().lat} longitude ${lastWayPont.getLatLng().lng}`);
+
         return `Deleted waypoint at latitude ${lastWayPont.getLatLng().lat} longitude ${lastWayPont.getLatLng().lng}`;
     }
 }
