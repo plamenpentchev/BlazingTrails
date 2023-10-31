@@ -16,3 +16,24 @@
         hostElement.lines.push(line);
     });
 }
+
+export function deleteLastWayPoint(hostElement) {
+    if (hostElement.waypoints.length > 0) {
+        let lastWayPont = hostElement.waypoints[hostElement.waypoints.length - 1];
+        hostElement.map.removeLayer(lastWayPont);
+        hostElement.waypoints.pop();
+
+        
+
+        if (hostElement.lines.length > 0) {
+            let lastLine = hostElement.lines[hostElement.lines.length - 1];
+            lastLine.remove(hostElement.map);
+            hostElement.lines.pop();
+
+            console.log(`Deleted waypoint (and lines) at latitude ${lastWayPont.getLatLng().lat} longitude ${lastWayPont.getLatLng().lng}`);
+            return `Deleted waypoint (and lines) at latitude ${lastWayPont.getLatLng().lat} longitude ${lastWayPont.getLatLng().lng}`;
+        }
+        console.log(`Deleted waypoint at latitude ${lastWayPont.getLatLng().lat} longitude ${lastWayPont.getLatLng().lng}`);
+        return `Deleted waypoint at latitude ${lastWayPont.getLatLng().lat} longitude ${lastWayPont.getLatLng().lng}`;
+    }
+}

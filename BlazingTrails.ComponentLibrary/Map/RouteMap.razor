@@ -4,8 +4,13 @@
 @implements IAsyncDisposable
 
 <div class="map-wrapper">
-    <div style="height:@(Height); width: @(Width);" @ref="_map">
+    <div class="controls">
+        <button @onclick="DeleteLastWayPoint" class="btn btn-secondary" title="Delete last way point" type="button">
+            <i class="bi bi-trash"></i>
+            Remove Last Waypoint
+        </button>
     </div>
+    <div style="height:@(Height); width: @(Width);" @ref="_map"></div>
 </div>
 
 @code {
@@ -18,6 +23,15 @@
         {
             _routeMapModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BlazingTrails.ComponentLibrary/Map/RouteMap.razor.js");
             await _routeMapModule.InvokeVoidAsync("initialize", _map);
+        }
+    }
+
+    private async Task DeleteLastWayPoint()
+    {
+        if (_routeMapModule is not null)
+        {
+            var message = _routeMapModule.InvokeAsync<string>("deleteLastWayPoint", _map);
+            Console.WriteLine(message);
         }
     }
 
