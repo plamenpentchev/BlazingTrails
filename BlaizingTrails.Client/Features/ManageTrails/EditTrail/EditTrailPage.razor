@@ -55,13 +55,16 @@ else
         _trail.Image = response.Trail.Image;
         _trail.Length = response.Trail.Length;
         _trail.TimeInMinutes = response.Trail.TimeInMinutes;
-        _trail.Route.Clear();
-        _trail.Route.AddRange(response.Trail.RouteInstructions
-            .Select( x => new TrailDto.RouteInstruction()
-            {
-                Stage = x.Stage,
-                Description = x.Description
-            }));
+        //_trail.Route.Clear();
+        //_trail.Route.AddRange(response.Trail.RouteInstructions
+        //    .Select( x => new TrailDto.RouteInstruction()
+        //    {
+        //        Stage = x.Stage,
+        //        Description = x.Description
+        //    }));
+        _trail.Waypoints.Clear();
+        _trail.Waypoints.AddRange(response.Trail.Waypoints.Select(x => new TrailDto.WaypointDto(x.Latitude, x.Longitude)));
+
         _isLoading = false;
     }
 
@@ -88,13 +91,15 @@ else
             _trail.Image = trail.Image;
             _trail.Length = trail.Length;
             _trail.TimeInMinutes = trail.TimeInMinutes;
-            _trail.Route.Clear();
-            _trail.Route.AddRange(trail.Route
-                .Select(x => new TrailDto.RouteInstruction()
-                    {
-                        Stage = x.Stage,
-                        Description = x.Description
-                    }));
+            //_trail.Route.Clear();
+            //_trail.Route.AddRange(trail.Route
+            //    .Select(x => new TrailDto.RouteInstruction()
+            //        {
+            //            Stage = x.Stage,
+            //            Description = x.Description
+            //        }));
+            _trail.Waypoints.Clear();
+            _trail.Waypoints.AddRange(trail.Waypoints.Select(x => new TrailDto.WaypointDto(x.Latitude, x.Longitude)));
             _submitSuccessfull = true;
             if (trail.ImageAction == ImageAction.Add)
             {

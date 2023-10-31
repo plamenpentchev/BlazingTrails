@@ -13,7 +13,8 @@ namespace BlazingTrails.API.Persistence.Entities
         public int TimeInMinutes { get; set; }
         public string TimeFormatted => $"{TimeInMinutes / 60}h {TimeInMinutes % 60}m";
         public int Length { get; set; }
-        public ICollection<RouteInstruction> Route { get; set; } = new List<RouteInstruction>() { };
+        //public ICollection<RouteInstruction> Route { get; set; } = new List<RouteInstruction>() { };
+        public ICollection<Waypoint> Waypoints { get; set; } = default!;
     }
 
     public class TrailConfig : IEntityTypeConfiguration<Trail>

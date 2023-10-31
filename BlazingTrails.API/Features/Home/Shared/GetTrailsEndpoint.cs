@@ -21,7 +21,7 @@ namespace BlazingTrails.API.Features.Home.Shared
         public override async Task<ActionResult<GetTrailsRequest.Response>> HandleAsync(int request, CancellationToken cancellationToken = default)
         {
             var trails = await _context.Trails
-                .Include(x => x.Route).ToListAsync();
+                .Include(x => x.Waypoints).ToListAsync();
 
             return Ok(new GetTrailsRequest.Response(
                 trails.Select(x => new GetTrailsRequest.Trail(

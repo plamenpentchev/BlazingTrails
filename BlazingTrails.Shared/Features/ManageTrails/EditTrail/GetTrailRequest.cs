@@ -22,9 +22,9 @@ namespace BlazingTrails.Shared.Features.ManageTrails.EditTrail
             int TimeInMinutes,
             int Length,
             string Description,
-            IEnumerable<RouteInstruction> RouteInstructions);
+            IEnumerable<Waypoint> Waypoints);
 
-        public record RouteInstruction (int Id, int Stage, string Description);
-
+        //public record RouteInstruction (int Id, int Stage, string Description);
+        public record Waypoint(decimal Latitude, decimal Longitude);
     }
 }
