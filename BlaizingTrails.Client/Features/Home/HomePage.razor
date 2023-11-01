@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using BlazingTrails.ComponentLibrary.Map;
 
 @inject IMediator Mediator
 @inject NavigationManager NavManager
@@ -98,7 +99,8 @@ else
                 Description = x.Description,
                 TimeInMinutes = x.TimeInMinutes,
                 Image = x.Image ?? "",
-                Length = x.Length
+                Length = x.Length,
+                Waypoints = x.Waypoints.Select( wp => new LatLong(wp.Latitude, wp.Longitude)).ToList()
             });
         }
         catch (HttpRequestException ex)

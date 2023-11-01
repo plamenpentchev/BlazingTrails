@@ -1,13 +1,8 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlazingTrails.Shared.Features.Home.Shared
 {
-   public record GetTrailsRequest():IRequest<GetTrailsRequest.Response>
+    public record GetTrailsRequest():IRequest<GetTrailsRequest.Response>
     {
         public const string RouteTemplate = "/trails";
 
@@ -19,7 +14,10 @@ namespace BlazingTrails.Shared.Features.Home.Shared
             string? Image,
             int TimeInMinutes,
             int Length,
-            string Description);
+            string Description,
+            List<Waypoint> Waypoints);
+
+        public record Waypoint(decimal Latitude, decimal Longitude);
 
     }
 }

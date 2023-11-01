@@ -5,6 +5,7 @@
 
     <div class="@CssClass">
         <RouteMap Width="100%" 
+            IsReadOnly="false"
             OnWaypointAdded="AddWaypoint" 
             OnWaypointDeleted="DeleteWaypoint" 
             Waypoints="_waypoints">
@@ -12,6 +13,7 @@
     </div>
 
 @code {
+   
     private List<LatLong> _waypoints = new List<LatLong>();
 
     protected override bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out List<TrailDto.WaypointDto> result, [NotNullWhen(false)] out string validationErrorMessage)

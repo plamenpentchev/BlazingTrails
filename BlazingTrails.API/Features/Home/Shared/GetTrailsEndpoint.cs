@@ -4,6 +4,7 @@ using BlazingTrails.Shared.Features.Home.Shared;
 using BlazingTrails.Shared.Features.ManageTrails.EditTrail;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BlazingTrails.API.Features.Home.Shared
 {
@@ -21,11 +22,19 @@ namespace BlazingTrails.API.Features.Home.Shared
         public override async Task<ActionResult<GetTrailsRequest.Response>> HandleAsync(int request, CancellationToken cancellationToken = default)
         {
             var trails = await _context.Trails
-                .Include(x => x.Waypoints).ToListAsync();
-
+                .Include(x => x.Waypoints)
+                .ToListAsync(cancellationToken);
+          
             return Ok(new GetTrailsRequest.Response(
-                trails.Select(x => new GetTrailsRequest.Trail(
-                    x.Id, x.Name, x.Location, x.Image, x.TimeInMinutes, x.Length, x.Description
+                trails.Select(trail => new GetTrailsRequest.Trail(
+                    trail.Id, 
+                    trail.Name, 
+                    trail.Location, 
+                    trail.Image, 
+                    trail.TimeInMinutes, 
+                    trail.Length, 
+                    trail.Description, 
+                    trail.Waypoints.Select(wp => new GetTrailsRequest.Waypoint(wp.Latitude, wp.Longitude)).ToList()
                 ))));
         }
     }

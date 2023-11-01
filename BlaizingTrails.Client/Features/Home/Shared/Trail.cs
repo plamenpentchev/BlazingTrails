@@ -1,4 +1,6 @@
-﻿namespace BlazingTrails.Client.Features.Home.Shared
+﻿using BlazingTrails.ComponentLibrary.Map;
+
+namespace BlazingTrails.Client.Features.Home.Shared
 {
     public class Trail
     {
@@ -12,7 +14,7 @@
         public int Length { get; set; }
         //public IEnumerable<RouteInstruction> Route { get; set; } =
         //Array.Empty<RouteInstruction>();
-        public IEnumerable<Waypoint> Waypoints { get; set; } = Array.Empty<Waypoint>();
+        public List<LatLong> Waypoints { get; set; } = new List<LatLong>();
     }
 
     public class RouteInstruction
@@ -21,9 +23,9 @@
         public string Description { get; set; } = string.Empty;
     }
 
-    public class Waypoint
-    {
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
-    }
+    //public class Waypoint
+    //{
+    //    public decimal Latitude { get; set; }
+    //    public decimal Longitude { get; set; }
+    //}
 }
